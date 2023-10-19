@@ -7,8 +7,8 @@ use image::DynamicImage;
 use image::Rgba;
 
 fn resize(img: &RgbaImage, new_dims: (u32, u32)) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
-    let (old_height, old_width) = img.dimensions();
-    let (new_height, new_width) = new_dims;
+    let (old_width, old_height) = img.dimensions();
+    let (new_width, new_height) = new_dims;
 
     let mut resized = ImageBuffer::new(new_width, new_height);
 
@@ -18,6 +18,8 @@ fn resize(img: &RgbaImage, new_dims: (u32, u32)) -> ImageBuffer<Rgba<u8>, Vec<u8
 
         if let Some(old_pixel) = img.get_pixel_checked(old_x, old_y) {
             *pixel = Rgba([old_pixel[0], old_pixel[1], old_pixel[2], old_pixel[3]]);
+        } else {
+            println!("({old_x} -> {new_x}, {old_y} -> {new_y})")
         }
     }
 
